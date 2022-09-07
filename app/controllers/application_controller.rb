@@ -10,6 +10,11 @@ class ApplicationController < Sinatra::Base
 
   end
 
+  get '/workouts' do
+    workout = Workout.all
+    workout.to_json()
+  end
+
   post '/users' do
     new_user=User.create(
       first_name:params[:first_name],
@@ -24,10 +29,25 @@ class ApplicationController < Sinatra::Base
     
   end
 
+  patch '/workouts/:id' do
+  # puts "hello"
+  # binding.pry
+  workout = Workout.find(params[:id])
+  workout.update(
+    user_id:params[:user_id]
+  )
+    end
+
+  get '/workouts/:id' do
+    # binding.pry
+    workout = Workout.find(params[:id])
+    workout.to_json
+
+  end
+
   get '/users/:id' do
     user = User.find(params[:id])
     user.to_json
-    # binding.pry
 
   end
 
